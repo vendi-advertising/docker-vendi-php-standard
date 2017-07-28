@@ -19,14 +19,6 @@ services:
             - "8181:81"
         networks:
             - vendi-network
-    php:
-        build: ./images/php-vendi/
-        image: vendi:php
-        volumes:
-            - ./code:/code
-        networks:
-            - vendi-network
-        tty: true
     db:
         image: mariadb:latest
         environment:
@@ -36,6 +28,15 @@ services:
             - MYSQL_ROOT_PASSWORD=cheese
         networks:
             - vendi-network
+    php:
+        build: ./images/php-vendi/
+        image: vendi:php
+        volumes:
+            - ./code:/code
+        networks:
+            - vendi-network
+        tty: true
+
 networks:
     vendi-network:
         driver: bridge
