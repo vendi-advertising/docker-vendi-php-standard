@@ -12,6 +12,13 @@ services:
             - vendi-network
         links:
             - php
+    web_text:
+        build: ./images/nginx-vendi/
+        image: vendi:nginx
+        ports:
+            - "8181:81"
+        networks:
+            - vendi-network
     php:
         build: ./images/php-vendi/
         image: vendi:php
