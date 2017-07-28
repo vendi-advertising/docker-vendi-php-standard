@@ -46,6 +46,18 @@ RUN apk add --no-cache --virtual .persistent-deps \
 # http://git.alpinelinux.org/cgit/aports/tree/main/lighttpd/lighttpd.pre-install?h=v3.3.2
 # http://git.alpinelinux.org/cgit/aports/tree/main/nginx-initscripts/nginx-initscripts.pre-install?h=v3.3.2
 
+    && rm -rf /var/lib/apt/lists/* \
+    && git clone https://github.com/phpredis/phpredis.git \
+    && cd phpredis \
+    && git checkout php7 \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf phpredis \
+
+
 
     && mkdir -p $PHP_INI_DIR/conf.d \
 
@@ -182,4 +194,6 @@ RUN apk add --no-cache --virtual .persistent-deps \
     } | tee /usr/local/etc/php-fpm.d/vendi.conf
 
 EXPOSE 9000
-CMD exec /usr/sbin/php-fpm7.1 --fpm-config /usr/local/etc/php-fpm.d/vendi.conf
+
+# CMD ["php-fpm"]
+CMD docker-php-entrypoint --fpm-config /usr/local/etc/php-fpm.d/vendi.conf

@@ -12,7 +12,7 @@ services:
             - vendi-network
         links:
             - php
-    web_text:
+    web_test:
         build: ./images/nginx-vendi/
         image: vendi:nginx
         ports:
